@@ -81,6 +81,8 @@
     overflow: hidden;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(33, 150, 243, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
 .publication-card:hover {
@@ -89,28 +91,33 @@
     border-color: #2196F3;
 }
 
-/* 论文图片 */
+/* 论文内容 - 放在图片上方 */
+.publication-content {
+    padding: 25px;
+    flex: 0 0 auto;
+}
+
+/* 论文图片 - 放在内容下方，增大显示区域 */
 .publication-image {
     width: 100%;
-    height: 200px;
+    height: 300px; /* 增大的图片高度 */
     overflow: hidden;
-    border-bottom: 1px solid #E3F2FD;
+    border-top: 1px solid #E3F2FD; /* 改为上方边框 */
+    flex: 1 1 auto;
+    min-height: 0; /* 确保图片可以缩小 */
 }
 
 .publication-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain; /* 改为contain，确保完整显示 */
+    background-color: #f8f9fa; /* 添加背景色 */
     transition: transform 0.3s ease;
+    padding: 10px; /* 添加内边距 */
 }
 
 .publication-card:hover .publication-image img {
-    transform: scale(1.05);
-}
-
-/* 论文内容 */
-.publication-content {
-    padding: 25px;
+    transform: scale(1.02);
 }
 
 .publication-title {
