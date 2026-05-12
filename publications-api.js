@@ -179,8 +179,9 @@ class PublicationsAPI {
         data.abstract = abstractMatch ? abstractMatch[1].trim() : null;
 
         // 提取第一张图片
-        const imageMatch = body.match(/!\[[^\]]*\]\(([^)]+)\)/) || body.match(/<img[^>]+src=["']([^"']+)["']/i);
-data.image = imageMatch ? imageMatch[1] : null;
+        // 提取第一张图片（用户直接粘贴的图片，GitHub 生成 HTML 格式）
+        const imageMatch = body.match(/<img[^>]+src=["']([^"']+)["']/i);
+        data.image = imageMatch ? imageMatch[1] : null;
         return data;
     }
 
