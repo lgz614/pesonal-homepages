@@ -26,7 +26,7 @@ class PublicationsAPI {
 
         // 检查配置
         if (!this.isConfigured()) {
-            this.showError('GitHub configuration not set. Please update github-config.js with your GitHub username and repository name.');
+            this.showError('GitHub configuration not set. Please update github-config.js');
             return;
         }
 
@@ -36,6 +36,11 @@ class PublicationsAPI {
 
     // 检查是否已配置
     isConfigured() {
+        // 如果有全局配置检查函数，使用全局函数
+        if (window.isGitHubConfigured) {
+            return window.isGitHubConfigured();
+        }
+        // 否则使用本地配置检查
         return this.config.owner !== 'your-github-username' &&
                this.config.repo !== 'your-repo-name';
     }
