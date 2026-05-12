@@ -108,18 +108,12 @@ class AvatarAPI {
 
     // 从Issue正文中提取头像URL
     extractAvatarUrl(body) {
-        // 匹配Markdown图片格式 ![alt](url)
-        const imageMatch = body.match(/!\[[^\]]*\]\(([^)]+)\)/);
-        if (imageMatch) {
-            return imageMatch[1];
+        // 匹配 HTML 格式的图片 <img src="...">
+        const htmlMatch = body.match(/<img[^>]+src=["']([^"']+)["']/i);
+        if (htmlMatch) {
+            return htmlMatch[1];
         }
-
-        // 匹配纯URL
-        const urlMatch = body.match(/(https?:\/\/[^\s]+)/);
-        if (urlMatch) {
-            return urlMatch[1];
-        }
-
+    
         return null;
     }
 
