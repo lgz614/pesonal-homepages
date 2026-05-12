@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Publications API and Styles -->
     <link rel="stylesheet" href="publications-styles.css">
+    <link rel="stylesheet" href="projects-styles.css">
+    <link rel="stylesheet" href="awards-styles.css">
+    <link rel="stylesheet" href="personal-styles.css">
+    <link rel="stylesheet" href="contact-styles.css">
     <style>
         * {
             margin: 0;
@@ -690,8 +694,9 @@
         <!-- 左侧固定区域 -->
         <div class="left-sidebar">
             <div class="avatar-container">
-                <div class="avatar">
-                    <!-- Avatar placeholder -->
+                <div class="avatar" id="avatar-container">
+                    <img id="avatar-image" src="" alt="User Avatar" style="display: none; width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                    <!-- Default avatar will be set by JavaScript -->
                 </div>
                 <div class="profile-info">
                     <h3 class="profile-name-left">username</h3>
@@ -717,7 +722,13 @@
                 <div class="section-card" id="personal-info">
                     <h2 class="section-title">Personal Introduction</h2>
                     <div class="section-content">
-                        <!-- Personal introduction content will go here -->
+                        <div id="personal-container" class="personal-container">
+                            <!-- Personal info will be loaded here dynamically -->
+                            <div class="personal-loading">
+                                <div class="loading-spinner"></div>
+                                <p>Loading personal info...</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -739,7 +750,13 @@
                 <div class="section-card" id="awards">
                     <h2 class="section-title">Awards & Honors</h2>
                     <div class="section-content">
-                        <!-- Awards & honors content will go here -->
+                        <div id="awards-container" class="awards-container">
+                            <!-- Awards will be loaded here dynamically -->
+                            <div class="awards-loading">
+                                <div class="loading-spinner"></div>
+                                <p>Loading awards...</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -747,22 +764,32 @@
                 <div class="section-card" id="projects">
                     <h2 class="section-title">Projects</h2>
                     <div class="section-content">
-                        <!-- Projects content will go here -->
+                        <div id="projects-container" class="projects-container">
+                            <!-- Projects will be loaded here dynamically -->
+                            <div class="projects-loading">
+                                <div class="loading-spinner"></div>
+                                <p>Loading projects...</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="section-card" id="contact">
                     <h2 class="section-title">Contact Information</h2>
                     <div class="section-content">
-                        <!-- Contact information content will go here -->
+                        <div id="contact-container" class="contact-container">
+                            <!-- Contact info will be loaded here dynamically -->
+                            <div class="contact-loading">
+                                <div class="loading-spinner"></div>
+                                <p>Loading contact info...</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Publications API Script -->
-    
     <!-- API Scripts -->
     <script src="github-config.js"></script>
     <script src="avatar-api.js"></script>
