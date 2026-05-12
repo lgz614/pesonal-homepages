@@ -260,19 +260,14 @@ class ContactAPI {
     }
 }
 
-
 // 当DOM加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
-    // 等待 GITHUB_CONFIG 加载完成
-    if (typeof window.GITHUB_CONFIG !== 'undefined') {
-        const xxxAPI = new xxxAPI();
-        xxxAPI.init();
-    } else {
-        console.error('GITHUB_CONFIG not loaded, please check github-config.js');
-        // 显示错误信息在页面上
-        const container = document.getElementById('xxx-container');
-        if (container) {
-            container.innerHTML = '<div class="error-message">GitHub configuration not set. Please check github-config.js</div>';
-        }
-    }
+    // 加载GitHub配置
+    const script = document.createElement('script');
+    script.src = 'github-config.js';
+    script.onload = () => {
+        const contactAPI = new ContactAPI();
+        contactAPI.init();
+    };
+    document.head.appendChild(script);
 });
