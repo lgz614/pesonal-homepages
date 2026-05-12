@@ -105,25 +105,53 @@ class PublicationsAPI {
             return null;
         }
 
-        // 创建卡片内容
+        // 安全处理文本内容，防止XSS
+        const escapeHtml = (text) => {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        };
+
+        // 验证URL格式
+        const isValidUrl = (url) => {
+            try {
+                new URL(url);
+                return true;
+            } catch {
+                return false;
+            }
+        };
+
+        // 过滤无效链接
+        const validLinks = {};
+        if (publicationData.pdf && isValidUrl(publicationData.pdf)) validLinks.pdf = publicationData.pdf;
+        if (publicationData.code && isValidUrl(publicationData.code)) validLinks.code = publicationData.code;
+        if (publicationData.project && isValidUrl(publicationData.project)) validLinks.project = publicationData.project;
+        if (publicationData.arxiv && isValidUrl(publicationData.arxiv)) validLinks.arxiv = publicationData.arxiv;
+        if (publicationData.doi && isValidUrl(publicationData.doi)) validLinks.doi = publicationData.doi;
+
+        // 创建卡片内容 - 图片在下方
         card.innerHTML = `
-    <div class="publication-content">
-        <h3 class="publication-title">${publicationData.title}</h3>
-        ${publicationData.authors ? `<div class="publication-authors">${publicationData.authors}</div>` : ''}
-        ${publicationData.venue ? `<div class="publication-venue">${publicationData.venue}</div>` : ''}
-        ${publicationData.date ? `<div class="publication-date">${publicationData.date}</div>` : ''}
-        <div class="publication-links">
-            ${publicationData.pdf ? `<a href="${publicationData.pdf}" class="publication-link" target="_blank">PDF</a>` : ''}
-            ${publicationData.code ? `<a href="${publicationData.code}" class="publication-link" target="_blank">Code</a>` : ''}
-            ${publicationData.project ? `<a href="${publicationData.project}" class="publication-link" target="_blank">Project</a>` : ''}
-            ${publicationData.arxiv ? `<a href="${publicationData.arxiv}" class="publication-link" target="_blank">arXiv</a>` : ''}
-            ${publicationData.doi ? `<a href="${publicationData.doi}" class="publication-link" target="_blank">DOI</a>` : ''}
-        </div>
-        ${publicationData.abstract ? `<div class="publication-abstract">${publicationData.abstract}</div>` : ''}
-        ${publicationData.citations ? `<div class="publication-citations">Citations: ${publicationData.citations}</div>` : ''}
-    </div>
-    ${publicationData.image ? `<div class="publication-image"><img src="${publicationData.image}" alt="${publicationData.title}"></div>` : ''}
-`;
+            <div class="publication-content">
+                <h3 class="publication-title">${escapeHtml(publicationData.title)}</h3>
+                ${publicationData.authors ? `<div class="publication-authors">${escapeHtml(publicationData.authors)}</div>` : ''}
+                ${publicationData.venue ? `<div class="publication-venue">${escapeHtml(publicationData.venue)}</div>` : ''}
+                ${publicationData.date ? `<div class="publication-date">${escapeHtml(publicationData.date)}</div>` : ''}
+                ${Object.keys(validLinks).length > 0 ? `
+                    <div class="publication-links">
+                        ${validLinks.pdf ? `<a href="${validLinks.pdf}" class="publication-link" target="_blank" rel="noopener noreferrer">PDF</a>` : ''}
+                        ${validLinks.code ? `<a href="${validLinks.code}" class="publication-link" target="_blank" rel="noopener noreferrer">Code</a>` : ''}
+                        ${validLinks.project ? `<a href="${validLinks.project}" class="publication-link" target="_blank" rel="noopener noreferrer">Project</a>` : ''}
+                        ${validLinks.arxiv ? `<a href="${validLinks.arxiv}" class="publication-link" target="_blank" rel="noopener noreferrer">arXiv</a>` : ''}
+                        ${validLinks.doi ? `<a href="${validLinks.doi}" class="publication-link" target="_blank" rel="noopener noreferrer">DOI</a>` : ''}
+                    </div>
+                ` : ''}
+                ${publicationData.abstract ? `<div class="publication-abstract">${escapeHtml(publicationData.abstract)}</div>` : ''}
+                ${publicationData.citations ? `<div class="publication-citations">Citations: ${publicationData.citations}</div>` : ''}
+            </div>
+            ${publicationData.image && isValidUrl(publicationData.image) ? `<div class="publication-image"><img src="${publicationData.image}" alt="${escapeHtml(publicationData.title)}" onerror="this.style.display='none'"></div>` : ''}
+        `;
+
         return card;
     }
 
@@ -178,10 +206,9 @@ class PublicationsAPI {
         data.abstract = abstractMatch ? abstractMatch[1].trim() : null;
 
         // 提取第一张图片
-        // 提取第一张图片（用户直接粘贴的图片，GitHub 生成 HTML 格式）
-        // 提取第一张图片（用户直接粘贴的图片，GitHub 生成 HTML 格式）
-        const imageMatch = body.match(/<img[^>]+src=["']([^"']+)["']/i);
+        const imageMatch = body.match(/!\[[^\]]*\]\(([^)]+)\)/);
         data.image = imageMatch ? imageMatch[1] : null;
+
         return data;
     }
 
