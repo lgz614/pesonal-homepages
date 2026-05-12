@@ -108,21 +108,21 @@ class PublicationsAPI {
         // 创建卡片内容
         card.innerHTML = `
     <div class="publication-content">
-        <h3 class="publication-title">${data.title}</h3>
-        ${data.authors ? `<div class="publication-authors">${data.authors}</div>` : ''}
-        ${data.venue ? `<div class="publication-venue">${data.venue}</div>` : ''}
-        ${data.date ? `<div class="publication-date">${data.date}</div>` : ''}
+        <h3 class="publication-title">${publicationData.title}</h3>
+        ${publicationData.authors ? `<div class="publication-authors">${publicationData.authors}</div>` : ''}
+        ${publicationData.venue ? `<div class="publication-venue">${publicationData.venue}</div>` : ''}
+        ${publicationData.date ? `<div class="publication-date">${publicationData.date}</div>` : ''}
         <div class="publication-links">
-            ${data.pdf ? `<a href="${data.pdf}" class="publication-link" target="_blank">PDF</a>` : ''}
-            ${data.code ? `<a href="${data.code}" class="publication-link" target="_blank">Code</a>` : ''}
-            ${data.project ? `<a href="${data.project}" class="publication-link" target="_blank">Project</a>` : ''}
-            ${data.arxiv ? `<a href="${data.arxiv}" class="publication-link" target="_blank">arXiv</a>` : ''}
-            ${data.doi ? `<a href="${data.doi}" class="publication-link" target="_blank">DOI</a>` : ''}
+            ${publicationData.pdf ? `<a href="${publicationData.pdf}" class="publication-link" target="_blank">PDF</a>` : ''}
+            ${publicationData.code ? `<a href="${publicationData.code}" class="publication-link" target="_blank">Code</a>` : ''}
+            ${publicationData.project ? `<a href="${publicationData.project}" class="publication-link" target="_blank">Project</a>` : ''}
+            ${publicationData.arxiv ? `<a href="${publicationData.arxiv}" class="publication-link" target="_blank">arXiv</a>` : ''}
+            ${publicationData.doi ? `<a href="${publicationData.doi}" class="publication-link" target="_blank">DOI</a>` : ''}
         </div>
-        ${data.abstract ? `<div class="publication-abstract">${data.abstract}</div>` : ''}
-        ${data.citations ? `<div class="publication-citations">Citations: ${data.citations}</div>` : ''}
+        ${publicationData.abstract ? `<div class="publication-abstract">${publicationData.abstract}</div>` : ''}
+        ${publicationData.citations ? `<div class="publication-citations">Citations: ${publicationData.citations}</div>` : ''}
     </div>
-    ${data.image ? `<div class="publication-image"><img src="${data.image}" alt="${data.title}"></div>` : ''}
+    ${publicationData.image ? `<div class="publication-image"><img src="${publicationData.image}" alt="${publicationData.title}"></div>` : ''}
 `;
         return card;
     }
