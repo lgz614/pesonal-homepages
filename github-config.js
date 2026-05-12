@@ -1,5 +1,5 @@
 // GitHub配置
-const GITHUB_CONFIG = {
+window.GITHUB_CONFIG = {
     owner: 'lgz614', // 替换为你的GitHub用户名
     repo: 'personal-homepages',         // 替换为你的仓库名
     apiUrl: 'https://api.github.com/repos',
