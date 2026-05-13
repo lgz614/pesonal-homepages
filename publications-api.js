@@ -136,7 +136,7 @@ class PublicationsAPI {
         if (publicationData.arxiv && isValidUrl(publicationData.arxiv)) validLinks.arxiv = publicationData.arxiv;
         if (publicationData.doi && isValidUrl(publicationData.doi)) validLinks.doi = publicationData.doi;
 
-        // 创建卡片内容 - 图片在下方
+        // 创建卡片内容 - 图片在下方，完全展示
         card.innerHTML = `
             <div class="publication-content">
                 <h3 class="publication-title">${escapeHtml(publicationData.title)}</h3>
@@ -211,9 +211,16 @@ class PublicationsAPI {
         const abstractMatch = body.match(/Abstract:\s*([^\n]+)/i);
         data.abstract = abstractMatch ? abstractMatch[1].trim() : null;
 
-        // 提取第一张图片
-        const imageMatch = body.match(/!\[[^\]]*\]\(([^)]+)\)/);
-        data.image = imageMatch ? imageMatch[1] : null;
+        // 提取第一张图片（支持HTML和Markdown格式）
+        // 优先匹配HTML格式的img标签
+        const htmlMatch = body.match(/<img[^>]+src=["']([^"']+)["']/i);
+        if (htmlMatch) {
+            data.image = htmlMatch[1];
+        } else {
+            // 回退到Markdown格式
+            const markdownMatch = body.match(/!\[[^\]]*\]\(([^)]+)\)/);
+            data.image = markdownMatch ? markdownMatch[1] : null;
+        }
 
         return data;
     }
@@ -272,12 +279,6 @@ class PublicationsAPI {
 
 // 当DOM加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
-    // 加载GitHub配置
-    const script = document.createElement('script');
-    script.src = 'github-config.js';
-    script.onload = () => {
-        const publicationsAPI = new PublicationsAPI();
-        publicationsAPI.init();
-    };
-    document.head.appendChild(script);
+    const publicationsAPI = new PublicationsAPI();
+    publicationsAPI.init();
 });
