@@ -211,15 +211,21 @@ class PublicationsAPI {
         const abstractMatch = body.match(/Abstract:\s*([^\n]+)/i);
         data.abstract = abstractMatch ? abstractMatch[1].trim() : null;
 
-        // 提取第一张图片（支持HTML和Markdown格式）
-        // 优先匹配HTML格式的img标签
+        // 提取第一张图片（支持多种格式）
+        // 1. 优先匹配HTML格式的img标签
         const htmlMatch = body.match(/<img[^>]+src=["']([^"']+)["']/i);
         if (htmlMatch) {
             data.image = htmlMatch[1];
         } else {
-            // 回退到Markdown格式
+            // 2. 匹配Markdown格式的图片
             const markdownMatch = body.match(/!\[[^\]]*\]\(([^)]+)\)/);
-            data.image = markdownMatch ? markdownMatch[1] : null;
+            if (markdownMatch) {
+                data.image = markdownMatch[1];
+            } else {
+                // 3. 匹配纯URL格式的图片
+                const urlMatch = body.match(/(https?:\/\/[^\s\n]+)/);
+                data.image = urlMatch ? urlMatch[1] : null;
+            }
         }
 
         return data;
