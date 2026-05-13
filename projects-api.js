@@ -100,8 +100,8 @@ class ProjectsAPI {
 
     // 创建项目卡片
     createProjectCard(issue) {
-        const card = document.createElement('div');
-        card.className = 'project-card';
+        const content = document.createElement('div');
+        content.className = 'project-content';
 
         // 提取项目信息
         const projectData = this.extractProjectData(issue);
@@ -183,8 +183,6 @@ class ProjectsAPI {
 
         content.innerHTML = contentHTML;
         return content;
-
-        return card;
     }
 
     // 从Issue中提取项目信息
