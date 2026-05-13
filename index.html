@@ -347,9 +347,11 @@
 
         
         .papers-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
+            display: block; /* 改为块级布局，确保垂直排列 */
+        }
+
+        .papers-grid > * {
+            margin-bottom: 30px; /* 添加底部间距 */
         }
 
         .paper-card {
