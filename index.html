@@ -344,17 +344,38 @@
         }
 
         .paper-card {
-            background: #F5F5F5;
-            border: 1px solid rgba(102, 126, 234, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            transition: all 0.3s ease;
+            background: transparent;
+            border: none;
+            padding: 20px 0;
+            transition: none;
         }
 
         .paper-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            background: #F5F5F5;
+            transform: none;
+            box-shadow: none;
+            background: transparent;
+        }
+
+        .paper-content {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .paper-image {
+            flex-shrink: 0;
+            width: 200px;
+            margin: 0;
+        }
+
+        .paper-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .paper-info {
+            flex: 1;
         }
 
         .paper-title {
@@ -483,21 +504,38 @@
         }
 
         .project-card {
-            background: #F5F5F5;
-            border: 1px solid rgba(102, 126, 234, 0.1);
-            border-radius: 15px;
-            padding: 25px;
-            transition: all 0.3s ease;
+            background: transparent;
+            border: none;
+            padding: 20px 0;
+            transition: none;
         }
 
         .project-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            background: #F5F5F5;
+            transform: none;
+            box-shadow: none;
+            background: transparent;
         }
 
-        .project-header {
-            margin-bottom: 15px;
+        .project-content {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .project-image {
+            flex-shrink: 0;
+            width: 200px;
+            margin: 0;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .project-info {
+            flex: 1;
         }
 
         .project-title {
