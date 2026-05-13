@@ -1,4 +1,4 @@
-// Avatar API 处理模块
+// Avatar API 处理模块(我现在修改了本地文件)
 class AvatarAPI {
     constructor() {
         this.config = window.GITHUB_CONFIG || {
@@ -161,12 +161,6 @@ class AvatarAPI {
 
 // 当DOM加载完成后初始化头像
 document.addEventListener('DOMContentLoaded', () => {
-    // 加载GitHub配置
-    const script = document.createElement('script');
-    script.src = 'github-config.js';
-    script.onload = () => {
-        const avatarAPI = new AvatarAPI();
-        avatarAPI.initAvatar();
-    };
-    document.head.appendChild(script);
+    const avatarAPI = new AvatarAPI();
+    avatarAPI.initAvatar();
 });
