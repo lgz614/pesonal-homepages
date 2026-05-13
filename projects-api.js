@@ -146,19 +146,33 @@ class ProjectsAPI {
             });
         }
 
-        // 创建卡片内容 - 图片在内容下方
+        // 翻译链接文本
+        const getLinkText = (key) => {
+            const translations = {
+                demo: { zh: '演示', en: 'Demo' },
+                github: { zh: '代码仓库', en: 'GitHub' }
+            };
+            if (languageManager && translations[key]) {
+                return translations[key][languageManager.getCurrentLanguage()] || key;
+            }
+            return key;
+        };
+
+        // 创建卡片内容 - 图片在左侧，文字在右侧
         const hasImage = projectData.image && isValidUrl(projectData.image);
         card.innerHTML = `
             <div class="project-content">
-                <h3 class="project-title">${escapeHtml(projectData.title)}</h3>
-                ${projectData.description ? `<p class="project-description">${escapeHtml(projectData.description)}</p>` : ''}
-                ${projectData.technologies ? `<div class="project-technologies">${escapeHtml(projectData.technologies)}</div>` : ''}
-                <div class="project-links">
-                    ${validLinks.demo ? `<a href="${validLinks.demo}" class="project-link" target="_blank" rel="noopener noreferrer">Demo</a>` : ''}
-                    ${validLinks.github ? `<a href="${validLinks.github}" class="project-link" target="_blank" rel="noopener noreferrer">GitHub</a>` : ''}
+                ${hasImage ? `<div class="project-image"><img src="${projectData.image}" alt="${escapeHtml(projectData.title)}" onerror="this.style.display='none'"></div>` : ''}
+                <div class="project-info">
+                    <h3 class="project-title">${escapeHtml(projectData.title)}</h3>
+                    ${projectData.description ? `<p class="project-description">${escapeHtml(projectData.description)}</p>` : ''}
+                    ${projectData.technologies ? `<div class="project-technologies">${escapeHtml(projectData.technologies)}</div>` : ''}
+                    <div class="project-links">
+                        ${validLinks.demo ? `<a href="${validLinks.demo}" class="project-link" target="_blank" rel="noopener noreferrer">${getLinkText('demo')}</a>` : ''}
+                        ${validLinks.github ? `<a href="${validLinks.github}" class="project-link" target="_blank" rel="noopener noreferrer">${getLinkText('github')}</a>` : ''}
+                    </div>
                 </div>
             </div>
-            ${hasImage ? `<div class="project-image"><img src="${projectData.image}" alt="${escapeHtml(projectData.title)}" onerror="this.style.display='none'"></div>` : ''}
         `;
 
         return card;
@@ -224,7 +238,8 @@ class ProjectsAPI {
     createLoadingElement() {
         const loading = document.createElement('div');
         loading.className = 'projects-loading';
-        loading.innerHTML = '<div class="loading-spinner"></div><p>Loading projects...</p>';
+        const loadingText = languageManager ? translateText('loading-projects') : 'Loading projects...';
+        loading.innerHTML = `<div class="loading-spinner"></div><p>${loadingText}</p>`;
         return loading;
     }
 
