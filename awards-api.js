@@ -187,7 +187,8 @@ class AwardsAPI {
     createLoadingElement() {
         const loading = document.createElement('div');
         loading.className = 'awards-loading';
-        loading.innerHTML = '<div class="loading-spinner"></div><p>Loading awards...</p>';
+        const loadingText = languageManager ? translateText('loading-awards') : 'Loading awards...';
+        loading.innerHTML = `<div class="loading-spinner"></div><p>${loadingText}</p>`;
         return loading;
     }
 
@@ -237,12 +238,6 @@ class AwardsAPI {
 
 // 当DOM加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
-    // 加载GitHub配置
-    const script = document.createElement('script');
-    script.src = 'github-config.js';
-    script.onload = () => {
-        const awardsAPI = new AwardsAPI();
-        awardsAPI.init();
-    };
-    document.head.appendChild(script);
+    const awardsAPI = new AwardsAPI();
+    awardsAPI.init();
 });
