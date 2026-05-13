@@ -151,11 +151,10 @@ class PublicationsAPI {
             return key;
         };
 
-        // 创建卡片内容 - 图片在左侧，文字在右侧
+        // 创建卡片内容 - 图片在文字下方，靠左对齐
         const hasImage = publicationData.image && isValidUrl(publicationData.image);
         card.innerHTML = `
             <div class="paper-content">
-                ${hasImage ? `<div class="paper-image"><img src="${publicationData.image}" alt="${escapeHtml(publicationData.title)}" onerror="this.style.display='none'"></div>` : ''}
                 <div class="paper-info">
                     <h3 class="paper-title">${escapeHtml(publicationData.title)}</h3>
                     ${publicationData.authors ? `<div class="paper-authors">${escapeHtml(publicationData.authors)}</div>` : ''}
@@ -173,6 +172,7 @@ class PublicationsAPI {
                     ${publicationData.abstract ? `<div class="paper-abstract">${escapeHtml(publicationData.abstract)}</div>` : ''}
                     ${publicationData.citations ? `<div class="paper-citations">${translateText('citations', 'dynamic') || 'Citations'}: ${publicationData.citations}</div>` : ''}
                 </div>
+                ${hasImage ? `<div class="paper-image"><img src="${publicationData.image}" alt="${escapeHtml(publicationData.title)}" onerror="this.style.display='none'"></div>` : ''}
             </div>
         `;
 
