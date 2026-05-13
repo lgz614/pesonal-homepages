@@ -158,11 +158,10 @@ class ProjectsAPI {
             return key;
         };
 
-        // 创建卡片内容 - 图片在左侧，文字在右侧
+        // 创建卡片内容 - 图片在文字下方，靠左对齐
         const hasImage = projectData.image && isValidUrl(projectData.image);
         card.innerHTML = `
             <div class="project-content">
-                ${hasImage ? `<div class="project-image"><img src="${projectData.image}" alt="${escapeHtml(projectData.title)}" onerror="this.style.display='none'"></div>` : ''}
                 <div class="project-info">
                     <h3 class="project-title">${escapeHtml(projectData.title)}</h3>
                     ${projectData.description ? `<p class="project-description">${escapeHtml(projectData.description)}</p>` : ''}
@@ -172,6 +171,7 @@ class ProjectsAPI {
                         ${validLinks.github ? `<a href="${validLinks.github}" class="project-link" target="_blank" rel="noopener noreferrer">${getLinkText('github')}</a>` : ''}
                     </div>
                 </div>
+                ${hasImage ? `<div class="project-image"><img src="${projectData.image}" alt="${escapeHtml(projectData.title)}" onerror="this.style.display='none'"></div>` : ''}
             </div>
         `;
 
@@ -236,10 +236,10 @@ class ProjectsAPI {
 
     // 创建加载元素
     createLoadingElement() {
+        // 不再显示加载提示，直接返回空元素
         const loading = document.createElement('div');
         loading.className = 'projects-loading';
-        const loadingText = languageManager ? translateText('loading-projects') : 'Loading projects...';
-        loading.innerHTML = `<div class="loading-spinner"></div><p>${loadingText}</p>`;
+        loading.style.display = 'none';
         return loading;
     }
 
