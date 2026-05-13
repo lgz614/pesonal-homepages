@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Personal Profile</title>
+    <title>Personal Profile - Alex Chen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Publications API and Styles -->
     <link rel="stylesheet" href="publications-styles.css">
@@ -107,13 +107,13 @@
             box-shadow: none;
         }
 
-        /* 只保留personal-info和contact的边框 */
+        /* 移除personal-info和contact的边框，全部采用隐形边界 */
         .section-card#personal-info,
         .section-card#contact {
-            background: #F5F5F5;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #E0E0E0;
+            background: transparent;
+            padding: 20px 0;
+            border: none;
+            border-radius: 0;
         }
 
         .section-card:hover {
