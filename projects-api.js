@@ -98,11 +98,8 @@ class ProjectsAPI {
         this.projectsContainer.appendChild(projectsGrid);
     }
 
-    // 创建项目卡片
+    // 创建项目内容
     createProjectCard(issue) {
-        const content = document.createElement('div');
-        content.className = 'project-content';
-
         // 提取项目信息
         const projectData = this.extractProjectData(issue);
 
@@ -132,19 +129,6 @@ class ProjectsAPI {
         const validLinks = {};
         if (projectData.demo && isValidUrl(projectData.demo)) validLinks.demo = projectData.demo;
         if (projectData.github && isValidUrl(projectData.github)) validLinks.github = projectData.github;
-
-        // 设置卡片点击事件
-        if (validLinks.demo) {
-            card.style.cursor = 'pointer';
-            card.addEventListener('click', (e) => {
-                // 防止点击链接时触发卡片跳转
-                if (e.target.tagName === 'A' || e.target.tagName === 'IMG') {
-                    e.stopPropagation();
-                    return;
-                }
-                window.open(validLinks.demo, '_blank', 'noopener,noreferrer');
-            });
-        }
 
         // 翻译链接文本
         const getLinkText = (key) => {
