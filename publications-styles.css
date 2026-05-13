@@ -209,6 +209,30 @@
         font-size: 13px;
         padding: 5px 10px;
     }
+
+    /* 移动端图片调整 */
+    .publication-image {
+        height: 200px; /* 移动端减小图片高度 */
+    }
+}
+
+@media (max-width: 480px) {
+    .publications-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .publication-content {
+        padding: 15px;
+    }
+
+    .publication-image {
+        height: 150px; /* 小屏幕进一步减小 */
+        padding: 5px; /* 减小内边距 */
+    }
+
+    .publication-links {
+        justify-content: center;
+    }
 }
 
 @media (max-width: 480px) {
