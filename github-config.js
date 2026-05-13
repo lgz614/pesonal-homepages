@@ -1,7 +1,7 @@
 // GitHub配置
 const GITHUB_CONFIG = {
-    owner: 'lgz614', // 替换为你的GitHub用户名
-    repo: 'personal-homepages',         // 替换为你的仓库名
+    owner: 'your-github-username', // 替换为你的GitHub用户名
+    repo: 'your-repo-name',         // 替换为你的仓库名
     apiUrl: 'https://api.github.com/repos',
     labels: {
         publication: 'publication',
