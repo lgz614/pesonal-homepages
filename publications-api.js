@@ -100,8 +100,8 @@ class PublicationsAPI {
 
     // 创建论文卡片
     createPublicationCard(issue) {
-        const card = document.createElement('div');
-        card.className = 'publication-card';
+        const content = document.createElement('div');
+        content.className = 'publication-content';
 
         // 提取论文信息
         const publicationData = this.extractPublicationData(issue);
@@ -184,8 +184,6 @@ class PublicationsAPI {
 
         content.innerHTML = contentHTML;
         return content;
-
-        return card;
     }
 
     // 从Issue中提取论文信息
