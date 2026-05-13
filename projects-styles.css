@@ -91,12 +91,31 @@
     border-color: #2196F3;
 }
 
-/* 项目内容 */
+/* 项目卡片样式 - 确保图片在内容下方 */
+.project-card {
+    background: #ffffff;
+    border: 1px solid #E3F2FD;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(33, 150, 243, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
+    border-color: #2196F3;
+}
+
+/* 项目内容 - 在上方 */
 .project-content {
     padding: 25px;
     flex: 1;
     display: flex;
     flex-direction: column;
+    order: 1; /* 确保内容在上方 */
 }
 
 /* 项目图片 - 在内容下方，完全展示 */
@@ -107,6 +126,7 @@
     border-top: 1px solid #E3F2FD;
     flex-shrink: 0;
     background-color: #f8f9fa;
+    order: 2; /* 确保图片在下方 */
 }
 
 .project-image img {
