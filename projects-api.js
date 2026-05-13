@@ -138,7 +138,7 @@ class ProjectsAPI {
             card.style.cursor = 'pointer';
             card.addEventListener('click', (e) => {
                 // 防止点击链接时触发卡片跳转
-                if (e.target.tagName === 'A') {
+                if (e.target.tagName === 'A' || e.target.tagName === 'IMG') {
                     e.stopPropagation();
                     return;
                 }
