@@ -136,26 +136,44 @@ class PublicationsAPI {
         if (publicationData.arxiv && isValidUrl(publicationData.arxiv)) validLinks.arxiv = publicationData.arxiv;
         if (publicationData.doi && isValidUrl(publicationData.doi)) validLinks.doi = publicationData.doi;
 
-        // 创建卡片内容 - 图片在下方，完全展示
+        // 翻译链接文本
+        const getLinkText = (key) => {
+            const translations = {
+                pdf: { zh: 'PDF', en: 'PDF' },
+                code: { zh: '代码', en: 'Code' },
+                project: { zh: '项目', en: 'Project' },
+                arxiv: { zh: '预印本', en: 'arXiv' },
+                doi: { zh: 'DOI', en: 'DOI' }
+            };
+            if (languageManager && translations[key]) {
+                return translations[key][languageManager.getCurrentLanguage()] || key;
+            }
+            return key;
+        };
+
+        // 创建卡片内容 - 图片在左侧，文字在右侧
+        const hasImage = publicationData.image && isValidUrl(publicationData.image);
         card.innerHTML = `
-            <div class="publication-content">
-                <h3 class="publication-title">${escapeHtml(publicationData.title)}</h3>
-                ${publicationData.authors ? `<div class="publication-authors">${escapeHtml(publicationData.authors)}</div>` : ''}
-                ${publicationData.venue ? `<div class="publication-venue">${escapeHtml(publicationData.venue)}</div>` : ''}
-                ${publicationData.date ? `<div class="publication-date">${escapeHtml(publicationData.date)}</div>` : ''}
-                ${Object.keys(validLinks).length > 0 ? `
-                    <div class="publication-links">
-                        ${validLinks.pdf ? `<a href="${validLinks.pdf}" class="publication-link" target="_blank" rel="noopener noreferrer">PDF</a>` : ''}
-                        ${validLinks.code ? `<a href="${validLinks.code}" class="publication-link" target="_blank" rel="noopener noreferrer">Code</a>` : ''}
-                        ${validLinks.project ? `<a href="${validLinks.project}" class="publication-link" target="_blank" rel="noopener noreferrer">Project</a>` : ''}
-                        ${validLinks.arxiv ? `<a href="${validLinks.arxiv}" class="publication-link" target="_blank" rel="noopener noreferrer">arXiv</a>` : ''}
-                        ${validLinks.doi ? `<a href="${validLinks.doi}" class="publication-link" target="_blank" rel="noopener noreferrer">DOI</a>` : ''}
-                    </div>
-                ` : ''}
-                ${publicationData.abstract ? `<div class="publication-abstract">${escapeHtml(publicationData.abstract)}</div>` : ''}
-                ${publicationData.citations ? `<div class="publication-citations">Citations: ${publicationData.citations}</div>` : ''}
+            <div class="paper-content">
+                ${hasImage ? `<div class="paper-image"><img src="${publicationData.image}" alt="${escapeHtml(publicationData.title)}" onerror="this.style.display='none'"></div>` : ''}
+                <div class="paper-info">
+                    <h3 class="paper-title">${escapeHtml(publicationData.title)}</h3>
+                    ${publicationData.authors ? `<div class="paper-authors">${escapeHtml(publicationData.authors)}</div>` : ''}
+                    ${publicationData.venue ? `<div class="paper-venue">${escapeHtml(publicationData.venue)}</div>` : ''}
+                    ${publicationData.date ? `<div class="paper-date">${escapeHtml(publicationData.date)}</div>` : ''}
+                    ${Object.keys(validLinks).length > 0 ? `
+                        <div class="paper-links">
+                            ${validLinks.pdf ? `<a href="${validLinks.pdf}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('pdf')}</a>` : ''}
+                            ${validLinks.code ? `<a href="${validLinks.code}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('code')}</a>` : ''}
+                            ${validLinks.project ? `<a href="${validLinks.project}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('project')}</a>` : ''}
+                            ${validLinks.arxiv ? `<a href="${validLinks.arxiv}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('arxiv')}</a>` : ''}
+                            ${validLinks.doi ? `<a href="${validLinks.doi}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('doi')}</a>` : ''}
+                        </div>
+                    ` : ''}
+                    ${publicationData.abstract ? `<div class="paper-abstract">${escapeHtml(publicationData.abstract)}</div>` : ''}
+                    ${publicationData.citations ? `<div class="paper-citations">${translateText('citations', 'dynamic') || 'Citations'}: ${publicationData.citations}</div>` : ''}
+                </div>
             </div>
-            ${publicationData.image && isValidUrl(publicationData.image) ? `<div class="publication-image"><img src="${publicationData.image}" alt="${escapeHtml(publicationData.title)}" onerror="this.style.display='none'"></div>` : ''}
         `;
 
         return card;
@@ -235,7 +253,8 @@ class PublicationsAPI {
     createLoadingElement() {
         const loading = document.createElement('div');
         loading.className = 'publications-loading';
-        loading.innerHTML = '<div class="loading-spinner"></div><p>Loading publications...</p>';
+        const loadingText = languageManager ? translateText('loading-publications') : 'Loading publications...';
+        loading.innerHTML = `<div class="loading-spinner"></div><p>${loadingText}</p>`;
         return loading;
     }
 
@@ -270,7 +289,8 @@ class PublicationsAPI {
     showEmptyState() {
         const emptyState = document.createElement('div');
         emptyState.className = 'publications-empty';
-        emptyState.innerHTML = '<p>No publications found. Add issues with the "publication" label to your GitHub repository.</p>';
+        const emptyText = languageManager ? translateText('empty-publications') : 'No publications found. Add issues with the "publication" label to your GitHub repository.';
+        emptyState.innerHTML = `<p>${emptyText}</p>`;
         this.publicationsContainer.innerHTML = '';
         this.publicationsContainer.appendChild(emptyState);
     }
