@@ -68,9 +68,11 @@
 
 /* 项目网格布局 */
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-    gap: 30px;
+    display: block; /* 改为块级布局，确保垂直排列 */
+}
+
+.projects-grid > * {
+    margin-bottom: 30px; /* 添加底部间距 */
 }
 
 /* 项目卡片样式 */
