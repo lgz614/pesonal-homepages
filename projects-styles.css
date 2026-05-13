@@ -91,32 +91,35 @@
     border-color: #2196F3;
 }
 
-/* 项目图片 */
-.project-image {
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    border-bottom: 1px solid #E3F2FD;
-    flex-shrink: 0;
-}
-
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.project-card:hover .project-image img {
-    transform: scale(1.05);
-}
-
 /* 项目内容 */
 .project-content {
     padding: 25px;
     flex: 1;
     display: flex;
     flex-direction: column;
+}
+
+/* 项目图片 - 在内容下方，完全展示 */
+.project-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    border-top: 1px solid #E3F2FD;
+    flex-shrink: 0;
+    background-color: #f8f9fa;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.02);
 }
 
 .project-title {
