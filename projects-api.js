@@ -146,13 +146,9 @@ class ProjectsAPI {
             });
         }
 
-        // 创建卡片内容
+        // 创建卡片内容 - 图片在内容下方
+        const hasImage = projectData.image && isValidUrl(projectData.image);
         card.innerHTML = `
-            <div class="project-image">
-                <img src="${projectData.image || this.createDefaultProjectImage()}"
-                     alt="${escapeHtml(projectData.title)}"
-                     onerror="this.src='${this.createDefaultProjectImage()}'">
-            </div>
             <div class="project-content">
                 <h3 class="project-title">${escapeHtml(projectData.title)}</h3>
                 ${projectData.description ? `<p class="project-description">${escapeHtml(projectData.description)}</p>` : ''}
@@ -162,6 +158,7 @@ class ProjectsAPI {
                     ${validLinks.github ? `<a href="${validLinks.github}" class="project-link" target="_blank" rel="noopener noreferrer">GitHub</a>` : ''}
                 </div>
             </div>
+            ${hasImage ? `<div class="project-image"><img src="${projectData.image}" alt="${escapeHtml(projectData.title)}" onerror="this.style.display='none'"></div>` : ''}
         `;
 
         return card;
@@ -193,15 +190,21 @@ class ProjectsAPI {
         const githubMatch = body.match(/GitHub:\s*(https?:\/\/[^\s\n]+)/i);
         data.github = githubMatch ? githubMatch[1].trim() : null;
 
-        // 提取第一张图片（支持HTML和Markdown格式）
-        // 优先匹配HTML格式的img标签
+        // 提取第一张图片（支持多种格式）
+        // 1. 优先匹配HTML格式的img标签
         const htmlMatch = body.match(/<img[^>]+src=["']([^"']+)["']/i);
         if (htmlMatch) {
             data.image = htmlMatch[1];
         } else {
-            // 回退到Markdown格式
+            // 2. 匹配Markdown格式的图片
             const markdownMatch = body.match(/!\[[^\]]*\]\(([^)]+)\)/);
-            data.image = markdownMatch ? markdownMatch[1] : null;
+            if (markdownMatch) {
+                data.image = markdownMatch[1];
+            } else {
+                // 3. 匹配纯URL格式的图片
+                const urlMatch = body.match(/(https?:\/\/[^\s\n]+)/);
+                data.image = urlMatch ? urlMatch[1] : null;
+            }
         }
 
         return data;
