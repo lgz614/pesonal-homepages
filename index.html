@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Personal Profile</title>
+    <title>Personal Profile - Alex Chen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Publications API and Styles -->
     <link rel="stylesheet" href="publications-styles.css">
@@ -685,9 +685,48 @@
                 font-size: 24px;
             }
         }
+
+        /* 语言切换按钮样式 */
+        .language-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #E3F2FD;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2196F3;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .language-toggle-btn:hover {
+            background: #D1E8FF;
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(33, 150, 243, 0.3);
+        }
+
+        .language-toggle-btn:active {
+            transform: scale(0.95);
+        }
+
+        .language-toggle-btn[data-lang="en"] {
+            font-size: 12px;
+        }
     </style>
 </head>
 <body>
+    <!-- 语言切换按钮 -->
+    <button id="language-toggle" class="language-toggle-btn" data-lang="zh">语言</button>
+
     <div class="layout-container">
         <!-- 左侧固定区域 -->
         <div class="left-sidebar">
@@ -718,7 +757,7 @@
 
             <div class="content-grid">
                 <div class="section-card" id="personal-info">
-                    <h2 class="section-title">Personal Introduction</h2>
+                    <h2 class="section-title" data-lang-key="personal-info">Personal Introduction</h2>
                     <div class="section-content">
                         <div id="personal-container" class="personal-container">
                             <!-- Personal info will be loaded here dynamically -->
@@ -732,7 +771,7 @@
 
                 <!-- Papers Section -->
                 <div class="section-card" id="papers">
-                    <h2 class="section-title">Publications</h2>
+                    <h2 class="section-title" data-lang-key="papers">Publications</h2>
                     <div class="section-content">
                         <div id="publications-container" class="publications-container">
                             <!-- Publications will be loaded here dynamically -->
@@ -746,7 +785,7 @@
 
                 <!-- Awards Section -->
                 <div class="section-card" id="awards">
-                    <h2 class="section-title">Awards & Honors</h2>
+                    <h2 class="section-title" data-lang-key="awards">Awards & Honors</h2>
                     <div class="section-content">
                         <div id="awards-container" class="awards-container">
                             <!-- Awards will be loaded here dynamically -->
@@ -760,7 +799,7 @@
 
                 <!-- Projects Section -->
                 <div class="section-card" id="projects">
-                    <h2 class="section-title">Projects</h2>
+                    <h2 class="section-title" data-lang-key="projects">Projects</h2>
                     <div class="section-content">
                         <div id="projects-container" class="projects-container">
                             <!-- Projects will be loaded here dynamically -->
@@ -787,6 +826,11 @@
             </div>
         </div>
     </div>
+
+    <!-- API Scripts -->
+    <!-- Language Resources and Manager -->
+    <script src="language.js"></script>
+    <script src="language-manager.js"></script>
 
     <!-- API Scripts -->
     <script src="github-config.js"></script>
