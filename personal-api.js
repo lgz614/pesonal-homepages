@@ -101,21 +101,35 @@ class PersonalAPI {
             return escapeHtml(text).replace(/\n/g, '<br>');
         };
 
+        // 翻译标题
+        const getSectionTitle = (key) => {
+            if (languageManager && languageManager.resources.dynamic[key]) {
+                return languageManager.resources.dynamic[key][languageManager.getCurrentLanguage()] || key;
+            }
+            // 默认英文标题
+            const defaultTitles = {
+                'education': 'Education',
+                'experience': 'Experience',
+                'skills': 'Skills'
+            };
+            return defaultTitles[key] || key;
+        };
+
         // 创建个人简介内容
         const personalContent = document.createElement('div');
         personalContent.className = 'personal-content';
         personalContent.innerHTML = `
             ${personalData.introduction ? `<div class="personal-introduction">${formatText(personalData.introduction)}</div>` : ''}
             ${personalData.education ? `<div class="personal-section">
-                <h3>Education</h3>
+                <h3>${getSectionTitle('education')}</h3>
                 <div class="personal-education">${formatText(personalData.education)}</div>
             </div>` : ''}
             ${personalData.experience ? `<div class="personal-section">
-                <h3>Experience</h3>
+                <h3>${getSectionTitle('experience')}</h3>
                 <div class="personal-experience">${formatText(personalData.experience)}</div>
             </div>` : ''}
             ${personalData.skills ? `<div class="personal-section">
-                <h3>Skills</h3>
+                <h3>${getSectionTitle('skills')}</h3>
                 <div class="personal-skills">${formatText(personalData.skills)}</div>
             </div>` : ''}
         `;
@@ -155,7 +169,8 @@ class PersonalAPI {
     createLoadingElement() {
         const loading = document.createElement('div');
         loading.className = 'personal-loading';
-        loading.innerHTML = '<div class="loading-spinner"></div><p>Loading personal info...</p>';
+        const loadingText = languageManager ? translateText('loading-personal') : 'Loading personal info...';
+        loading.innerHTML = `<div class="loading-spinner"></div><p>${loadingText}</p>`;
         return loading;
     }
 
@@ -198,12 +213,6 @@ class PersonalAPI {
 
 // 当DOM加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
-    // 加载GitHub配置
-    const script = document.createElement('script');
-    script.src = 'github-config.js';
-    script.onload = () => {
-        const personalAPI = new PersonalAPI();
-        personalAPI.init();
-    };
-    document.head.appendChild(script);
+    const personalAPI = new PersonalAPI();
+    personalAPI.init();
 });
