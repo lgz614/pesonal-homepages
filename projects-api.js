@@ -100,8 +100,8 @@ class ProjectsAPI {
 
     // 创建项目卡片
     createProjectCard(issue) {
-        const card = document.createElement('div');
-        card.className = 'project-card';
+        const content = document.createElement('div');
+        content.className = 'project-content';
 
         // 提取项目信息
         const projectData = this.extractProjectData(issue);
@@ -183,8 +183,6 @@ class ProjectsAPI {
 
         content.innerHTML = contentHTML;
         return content;
-
-        return card;
     }
 
     // 从Issue中提取项目信息
@@ -283,7 +281,8 @@ class ProjectsAPI {
     showEmptyState() {
         const emptyState = document.createElement('div');
         emptyState.className = 'projects-empty';
-        emptyState.innerHTML = '<p>No projects found. Add issues with the "project" label to your GitHub repository.</p>';
+        const emptyText = languageManager ? translateText('empty-projects') : 'No projects found. Add issues with the "project" label to your GitHub repository.';
+        emptyState.innerHTML = `<p>${emptyText}</p>`;
         this.projectsContainer.innerHTML = '';
         this.projectsContainer.appendChild(emptyState);
     }
