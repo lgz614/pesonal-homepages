@@ -151,30 +151,39 @@ class PublicationsAPI {
             return key;
         };
 
-        // 创建卡片内容 - 图片在文字下方，靠左对齐
+        // 直接输出issue信息，不使用卡片形式
         const hasImage = publicationData.image && isValidUrl(publicationData.image);
-        card.innerHTML = `
-            <div class="paper-content">
-                <div class="paper-info">
-                    <h3 class="paper-title">${escapeHtml(publicationData.title)}</h3>
-                    ${publicationData.authors ? `<div class="paper-authors">${escapeHtml(publicationData.authors)}</div>` : ''}
-                    ${publicationData.venue ? `<div class="paper-venue">${escapeHtml(publicationData.venue)}</div>` : ''}
-                    ${publicationData.date ? `<div class="paper-date">${escapeHtml(publicationData.date)}</div>` : ''}
-                    ${Object.keys(validLinks).length > 0 ? `
-                        <div class="paper-links">
-                            ${validLinks.pdf ? `<a href="${validLinks.pdf}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('pdf')}</a>` : ''}
-                            ${validLinks.code ? `<a href="${validLinks.code}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('code')}</a>` : ''}
-                            ${validLinks.project ? `<a href="${validLinks.project}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('project')}</a>` : ''}
-                            ${validLinks.arxiv ? `<a href="${validLinks.arxiv}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('arxiv')}</a>` : ''}
-                            ${validLinks.doi ? `<a href="${validLinks.doi}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('doi')}</a>` : ''}
-                        </div>
-                    ` : ''}
-                    ${publicationData.abstract ? `<div class="paper-abstract">${escapeHtml(publicationData.abstract)}</div>` : ''}
-                    ${publicationData.citations ? `<div class="paper-citations">${translateText('citations', 'dynamic') || 'Citations'}: ${publicationData.citations}</div>` : ''}
-                </div>
-                ${hasImage ? `<div class="paper-image"><img src="${publicationData.image}" alt="${escapeHtml(publicationData.title)}" onerror="this.style.display='none'"></div>` : ''}
+        const content = document.createElement('div');
+        content.className = 'paper-content';
+
+        // 构建内容HTML
+        let contentHTML = `
+            <div class="paper-info">
+                <h3 class="paper-title">${escapeHtml(publicationData.title)}</h3>
+                ${publicationData.authors ? `<div class="paper-authors">${escapeHtml(publicationData.authors)}</div>` : ''}
+                ${publicationData.venue ? `<div class="paper-venue">${escapeHtml(publicationData.venue)}</div>` : ''}
+                ${publicationData.date ? `<div class="paper-date">${escapeHtml(publicationData.date)}</div>` : ''}
+                ${Object.keys(validLinks).length > 0 ? `
+                    <div class="paper-links">
+                        ${validLinks.pdf ? `<a href="${validLinks.pdf}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('pdf')}</a>` : ''}
+                        ${validLinks.code ? `<a href="${validLinks.code}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('code')}</a>` : ''}
+                        ${validLinks.project ? `<a href="${validLinks.project}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('project')}</a>` : ''}
+                        ${validLinks.arxiv ? `<a href="${validLinks.arxiv}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('arxiv')}</a>` : ''}
+                        ${validLinks.doi ? `<a href="${validLinks.doi}" class="paper-link" target="_blank" rel="noopener noreferrer">${getLinkText('doi')}</a>` : ''}
+                    </div>
+                ` : ''}
+                ${publicationData.abstract ? `<div class="paper-abstract">${escapeHtml(publicationData.abstract)}</div>` : ''}
+                ${publicationData.citations ? `<div class="paper-citations">${translateText('citations', 'dynamic') || 'Citations'}: ${publicationData.citations}</div>` : ''}
             </div>
         `;
+
+        // 图片在文字下方
+        if (hasImage) {
+            contentHTML += `<div class="paper-image"><img src="${publicationData.image}" alt="${escapeHtml(publicationData.title)}" onerror="this.style.display='none'"></div>`;
+        }
+
+        content.innerHTML = contentHTML;
+        return content;
 
         return card;
     }
