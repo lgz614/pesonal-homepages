@@ -219,7 +219,8 @@ class ContactAPI {
     createLoadingElement() {
         const loading = document.createElement('div');
         loading.className = 'contact-loading';
-        loading.innerHTML = '<div class="loading-spinner"></div><p>Loading contact info...</p>';
+        const loadingText = languageManager ? translateText('loading-contact') : 'Loading contact info...';
+        loading.innerHTML = `<div class="loading-spinner"></div><p>${loadingText}</p>`;
         return loading;
     }
 
@@ -262,12 +263,6 @@ class ContactAPI {
 
 // 当DOM加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
-    // 加载GitHub配置
-    const script = document.createElement('script');
-    script.src = 'github-config.js';
-    script.onload = () => {
-        const contactAPI = new ContactAPI();
-        contactAPI.init();
-    };
-    document.head.appendChild(script);
+    const contactAPI = new ContactAPI();
+    contactAPI.init();
 });
