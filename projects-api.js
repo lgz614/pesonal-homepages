@@ -158,22 +158,31 @@ class ProjectsAPI {
             return key;
         };
 
-        // 创建卡片内容 - 图片在文字下方，靠左对齐
+        // 直接输出issue信息，不使用卡片形式
         const hasImage = projectData.image && isValidUrl(projectData.image);
-        card.innerHTML = `
-            <div class="project-content">
-                <div class="project-info">
-                    <h3 class="project-title">${escapeHtml(projectData.title)}</h3>
-                    ${projectData.description ? `<p class="project-description">${escapeHtml(projectData.description)}</p>` : ''}
-                    ${projectData.technologies ? `<div class="project-technologies">${escapeHtml(projectData.technologies)}</div>` : ''}
-                    <div class="project-links">
-                        ${validLinks.demo ? `<a href="${validLinks.demo}" class="project-link" target="_blank" rel="noopener noreferrer">${getLinkText('demo')}</a>` : ''}
-                        ${validLinks.github ? `<a href="${validLinks.github}" class="project-link" target="_blank" rel="noopener noreferrer">${getLinkText('github')}</a>` : ''}
-                    </div>
+        const content = document.createElement('div');
+        content.className = 'project-content';
+
+        // 构建内容HTML
+        let contentHTML = `
+            <div class="project-info">
+                <h3 class="project-title">${escapeHtml(projectData.title)}</h3>
+                ${projectData.description ? `<p class="project-description">${escapeHtml(projectData.description)}</p>` : ''}
+                ${projectData.technologies ? `<div class="project-technologies">${escapeHtml(projectData.technologies)}</div>` : ''}
+                <div class="project-links">
+                    ${validLinks.demo ? `<a href="${validLinks.demo}" class="project-link" target="_blank" rel="noopener noreferrer">${getLinkText('demo')}</a>` : ''}
+                    ${validLinks.github ? `<a href="${validLinks.github}" class="project-link" target="_blank" rel="noopener noreferrer">${getLinkText('github')}</a>` : ''}
                 </div>
-                ${hasImage ? `<div class="project-image"><img src="${projectData.image}" alt="${escapeHtml(projectData.title)}" onerror="this.style.display='none'"></div>` : ''}
             </div>
         `;
+
+        // 图片在文字下方
+        if (hasImage) {
+            contentHTML += `<div class="project-image"><img src="${projectData.image}" alt="${escapeHtml(projectData.title)}" onerror="this.style.display='none'"></div>`;
+        }
+
+        content.innerHTML = contentHTML;
+        return content;
 
         return card;
     }
