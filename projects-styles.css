@@ -14,16 +14,16 @@
     align-items: center;
     justify-content: center;
     padding: 40px;
-    background: #E3F2FD;
+    background: #2246A6;
     border-radius: 15px;
-    border: 1px solid #2196F3;
+    border: 1px solid #2246A6;
 }
 
 .loading-spinner {
     width: 40px;
     height: 40px;
     border: 4px solid #E3F2FD;
-    border-top: 4px solid #2196F3;
+    border-top: 4px solid #2246A6;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 15px;
@@ -53,15 +53,15 @@
 /* 空状态样式 */
 .projects-empty {
     padding: 40px;
-    background: #E3F2FD;
-    border: 1px solid #2196F3;
+    background: #2246A6;
+    border: 1px solid #2246A6;
     border-radius: 15px;
     text-align: center;
 }
 
 .projects-empty p {
     margin: 0;
-    color: #1976D2;
+    color: #000000;
     font-size: 16px;
     line-height: 1.6;
 }
@@ -78,7 +78,7 @@
 /* 项目卡片样式 */
 .project-card {
     background: #ffffff;
-    border: 1px solid #E3F2FD;
+    border: 1px solid #2246A6;
     border-radius: 15px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -90,13 +90,13 @@
 .project-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
-    border-color: #2196F3;
+    border-color: #000000;
 }
 
 /* 项目卡片样式 - 确保图片在内容下方 */
 .project-card {
     background: #ffffff;
-    border: 1px solid #E3F2FD;
+    border: 1px solid #2246A6;
     border-radius: 15px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -108,7 +108,7 @@
 .project-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(33, 150, 243, 0.2);
-    border-color: #2196F3;
+    border-color: #000000;
 }
 
 /* 项目内容 - 在上方 */
@@ -136,13 +136,13 @@
 .project-title {
     font-size: 20px;
     font-weight: 600;
-    color: #2196F3;
+    color: #000000;
     margin: 0 0 15px 0;
     line-height: 1.4;
 }
 
 .project-description {
-    color: #1976D2;
+    color: #000000;
     font-size: 14px;
     line-height: 1.6;
     margin-bottom: 15px;
@@ -150,12 +150,12 @@
 }
 
 .project-technologies {
-    color: #2196F3;
+    color: #000000;
     font-size: 13px;
     font-weight: 500;
     margin-bottom: 15px;
     padding: 10px;
-    background: #E3F2FD;
+    background: #2246A6;
     border-radius: 8px;
 }
 
@@ -166,12 +166,12 @@
 }
 
 .project-link {
-    color: #2196F3;
+    color: #000000;
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
     padding: 8px 16px;
-    border: 1px solid #2196F3;
+    border: 1px solid #2246A6;
     border-radius: 20px;
     transition: all 0.2s ease;
 }
