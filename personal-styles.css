@@ -14,9 +14,9 @@
     align-items: center;
     justify-content: center;
     padding: 40px;
-    background: #E3F2FD;
+    background: #2246A6;
     border-radius: 15px;
-    border: 1px solid #2196F3;
+    border: 1px solid #2246A6;
 }
 
 .loading-spinner {
@@ -53,22 +53,22 @@
 /* 空状态样式 */
 .personal-empty {
     padding: 40px;
-    background: #E3F2FD;
-    border: 1px solid #2196F3;
+    background: #2246A6;
+    border: 1px solid #2246A6;
     border-radius: 15px;
     text-align: center;
 }
 
 .personal-empty p {
     margin: 0;
-    color: #1976D2;
+    color: #000000;
     font-size: 16px;
     line-height: 1.6;
 }
 
 /* 个人简介内容样式 */
 .personal-content {
-    color: #1976D2;
+    color: #000000;
     line-height: 1.8;
     font-size: 16px;
 }
@@ -76,9 +76,9 @@
 .personal-introduction {
     margin-bottom: 30px;
     padding: 20px;
-    background: #E3F2FD;
+    background: #2246A6;
     border-radius: 10px;
-    border-left: 4px solid #2196F3;
+    border-left: 4px solid #2246A6;
 }
 
 .personal-section {
@@ -86,7 +86,7 @@
 }
 
 .personal-section h3 {
-    color: #2196F3;
+    color: #000000;
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 10px;
