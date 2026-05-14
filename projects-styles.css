@@ -123,25 +123,14 @@
 /* 项目图片 - 在内容下方，完全展示 */
 .project-image {
     width: 100%;
-    height: 250px;
-    overflow: hidden;
-    border-top: 1px solid #E3F2FD;
-    flex-shrink: 0;
-    background-color: #f8f9fa;
-    order: 2; /* 确保图片在下方 */
+    margin-top: 15px;
+    line-height: 0; /* 消除图片下方空白 */
 }
 
 .project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-    padding: 10px;
-    background-color: #f8f9fa;
-}
-
-.project-card:hover .project-image img {
-    transform: scale(1.02);
+    max-width: 100%;
+    height: auto;
+    display: block; /* 直接显示完整图片 */
 }
 
 .project-title {
